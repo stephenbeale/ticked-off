@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import type { Checklist, PacklistData } from '../types';
+import type { Checklist, AppData } from '../types';
 import { createItem } from '../storage';
 import { Header } from './Header';
 
 interface EditorProps {
-  data: PacklistData;
-  setData: (d: PacklistData) => void;
+  data: AppData;
+  setData: (d: AppData) => void;
   listId: string;
   onBack: () => void;
 }

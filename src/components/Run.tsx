@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Checklist, PacklistData } from '../types';
+import type { Checklist, AppData } from '../types';
 import { resetChecks } from '../storage';
 import {
   buildMailtoUrl,
@@ -10,8 +10,8 @@ import {
 import { Header } from './Header';
 
 interface RunProps {
-  data: PacklistData;
-  setData: (d: PacklistData) => void;
+  data: AppData;
+  setData: (d: AppData) => void;
   listId: string;
   onBack: () => void;
   onEdit: () => void;

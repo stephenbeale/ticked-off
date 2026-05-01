@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { load, save } from './storage';
-import type { PacklistData, View } from './types';
+import type { AppData, View } from './types';
 import { Home } from './components/Home';
 import { Editor } from './components/Editor';
 import { Run } from './components/Run';
 
 function App() {
-  const [data, setData] = useState<PacklistData>(() => load());
+  const [data, setData] = useState<AppData>(() => load());
   const [view, setView] = useState<View>({ name: 'home' });
 
   useEffect(() => {

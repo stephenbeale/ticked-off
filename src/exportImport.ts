@@ -1,4 +1,4 @@
-import type { Checklist, PacklistData } from './types';
+import type { Checklist, AppData } from './types';
 
 function safeFilename(name: string): string {
   return name.replace(/[^a-z0-9-_]+/gi, '-').replace(/^-+|-+$/g, '') || 'list';
@@ -19,14 +19,14 @@ export function exportListJSON(list: Checklist): void {
   const blob = new Blob([JSON.stringify(list, null, 2)], {
     type: 'application/json',
   });
-  downloadBlob(blob, `${safeFilename(list.name)}.packlist.json`);
+  downloadBlob(blob, `${safeFilename(list.name)}.tickedoff.json`);
 }
 
-export function exportAllJSON(data: PacklistData): void {
+export function exportAllJSON(data: AppData): void {
   const blob = new Blob([JSON.stringify(data, null, 2)], {
     type: 'application/json',
   });
-  downloadBlob(blob, 'packlist-backup.json');
+  downloadBlob(blob, 'tickedoff-backup.json');
 }
 
 export function exportListCSV(list: Checklist): void {
@@ -49,7 +49,7 @@ export function listToPlainText(list: Checklist): string {
 }
 
 export function buildMailtoUrl(list: Checklist): string {
-  const subject = `Packlist — ${list.name}`;
+  const subject = `Ticked Off — ${list.name}`;
   const body = listToPlainText(list);
   return `mailto:?subject=${encodeURIComponent(
     subject
@@ -73,8 +73,8 @@ export interface ImportResult {
 
 export function importFromJSON(
   text: string,
-  current: PacklistData
-): { data: PacklistData; result: ImportResult } {
+  current: AppData
+): { data: AppData; result: ImportResult } {
   try {
     const parsed = JSON.parse(text) as unknown;
     const incoming: Checklist[] = [];
@@ -82,9 +82,9 @@ export function importFromJSON(
       if (
         'version' in parsed &&
         'lists' in parsed &&
-        Array.isArray((parsed as PacklistData).lists)
+        Array.isArray((parsed as AppData).lists)
       ) {
-        incoming.push(...(parsed as PacklistData).lists);
+        incoming.push(...(parsed as AppData).lists);
       } else if ('items' in parsed && 'name' in parsed) {
         incoming.push(parsed as Checklist);
       }

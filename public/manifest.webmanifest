@@ -1,6 +1,6 @@
 {
-  "name": "Packlist",
-  "short_name": "Packlist",
+  "name": "Ticked Off",
+  "short_name": "Ticked Off",
   "description": "Reusable checklists for travel, packing, and routines.",
   "start_url": "./",
   "scope": "./",

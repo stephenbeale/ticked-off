@@ -1,12 +1,12 @@
 import { useRef, useState } from 'react';
-import type { Checklist, PacklistData } from '../types';
+import type { Checklist, AppData } from '../types';
 import { createList, duplicateList } from '../storage';
 import { exportAllJSON, importFromJSON } from '../exportImport';
 import { Header } from './Header';
 
 interface HomeProps {
-  data: PacklistData;
-  setData: (d: PacklistData) => void;
+  data: AppData;
+  setData: (d: AppData) => void;
   onOpenEdit: (id: string) => void;
   onOpenRun: (id: string) => void;
 }
@@ -49,7 +49,7 @@ export function Home({ data, setData, onOpenEdit, onOpenRun }: HomeProps) {
 
   return (
     <>
-      <Header title="Packlist" />
+      <Header title="Ticked Off" />
       <main className="mx-auto w-full max-w-2xl flex-1 px-3 pb-24">
         <form
           className="mt-3 flex gap-2"

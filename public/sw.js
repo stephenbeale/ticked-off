@@ -1,4 +1,4 @@
-const CACHE = 'packlist-v1';
+const CACHE = 'tickedoff-v1';
 const PRECACHE = ['./', './index.html', './manifest.webmanifest', './favicon.svg', './icon-192.svg', './icon-512.svg'];
 
 self.addEventListener('install', (event) => {

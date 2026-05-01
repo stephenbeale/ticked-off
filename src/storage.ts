@@ -1,17 +1,17 @@
-import type { Checklist, ChecklistItem, PacklistData } from './types';
+import type { Checklist, ChecklistItem, AppData } from './types';
 
-const KEY = 'packlist:v1';
+const KEY = 'tickedoff:v1';
 
 const uid = (): string =>
   `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 
-const empty = (): PacklistData => ({ version: 1, lists: [] });
+const empty = (): AppData => ({ version: 1, lists: [] });
 
-export function load(): PacklistData {
+export function load(): AppData {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return empty();
-    const parsed = JSON.parse(raw) as PacklistData;
+    const parsed = JSON.parse(raw) as AppData;
     if (parsed.version !== 1 || !Array.isArray(parsed.lists)) return empty();
     return parsed;
   } catch {
@@ -19,7 +19,7 @@ export function load(): PacklistData {
   }
 }
 
-export function save(data: PacklistData): void {
+export function save(data: AppData): void {
   localStorage.setItem(KEY, JSON.stringify(data));
 }
 

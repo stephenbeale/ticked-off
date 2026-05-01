@@ -12,7 +12,7 @@ export interface Checklist {
   updatedAt: number;
 }
 
-export interface PacklistData {
+export interface AppData {
   version: 1;
   lists: Checklist[];
 }
