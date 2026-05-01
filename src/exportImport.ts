@@ -33,8 +33,12 @@ export function exportListCSV(list: Checklist): void {
   const escape = (s: string): string =>
     /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   const rows = [
-    ['item', 'checked'],
-    ...list.items.map((it) => [escape(it.text), it.checked ? '1' : '0']),
+    ['type', 'item', 'checked'],
+    ...list.items.map((it) => [
+      it.isHeader ? 'header' : 'item',
+      escape(it.text),
+      it.isHeader ? '' : it.checked ? '1' : '0',
+    ]),
   ];
   const csv = rows.map((r) => r.join(',')).join('\r\n');
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
@@ -42,10 +46,14 @@ export function exportListCSV(list: Checklist): void {
 }
 
 export function listToPlainText(list: Checklist): string {
-  const lines = list.items.map(
-    (it) => `${it.checked ? '[x]' : '[ ]'} ${it.text}`
-  );
-  return `${list.name}\n${'='.repeat(list.name.length)}\n\n${lines.join('\n')}`;
+  const lines = list.items.map((it) => {
+    if (it.isHeader) {
+      const label = it.text || 'Section';
+      return `\n## ${label}`;
+    }
+    return `${it.checked ? '[x]' : '[ ]'} ${it.text}`;
+  });
+  return `${list.name}\n${'='.repeat(list.name.length)}\n${lines.join('\n')}`;
 }
 
 export function buildMailtoUrl(list: Checklist): string {
