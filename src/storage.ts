@@ -34,8 +34,10 @@ export function createList(name: string): Checklist {
   };
 }
 
-export function createItem(text: string): ChecklistItem {
-  return { id: uid(), text: text.trim(), checked: false };
+export function createItem(text: string, isHeader = false): ChecklistItem {
+  const item: ChecklistItem = { id: uid(), text: text.trim(), checked: false };
+  if (isHeader) item.isHeader = true;
+  return item;
 }
 
 export function duplicateList(list: Checklist, suffix = ' (copy)'): Checklist {

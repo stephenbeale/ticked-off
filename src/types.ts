@@ -2,6 +2,7 @@ export interface ChecklistItem {
   id: string;
   text: string;
   checked: boolean;
+  isHeader?: boolean;
 }
 
 export interface Checklist {

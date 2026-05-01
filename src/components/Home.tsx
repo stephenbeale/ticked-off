@@ -90,8 +90,9 @@ export function Home({ data, setData, onOpenEdit, onOpenRun }: HomeProps) {
         ) : (
           <ul className="mt-4 space-y-2">
             {data.lists.map((list) => {
-              const total = list.items.length;
-              const done = list.items.filter((i) => i.checked).length;
+              const checkable = list.items.filter((i) => !i.isHeader);
+              const total = checkable.length;
+              const done = checkable.filter((i) => i.checked).length;
               return (
                 <li
                   key={list.id}

@@ -60,8 +60,9 @@ export function Run({ data, setData, listId, onBack, onEdit }: RunProps) {
     setTimeout(() => setToast(null), 2200);
   };
 
-  const total = list.items.length;
-  const done = list.items.filter((i) => i.checked).length;
+  const checkable = list.items.filter((i) => !i.isHeader);
+  const total = checkable.length;
+  const done = checkable.filter((i) => i.checked).length;
   const pct = total === 0 ? 0 : Math.round((done / total) * 100);
 
   return (
@@ -178,33 +179,45 @@ export function Run({ data, setData, listId, onBack, onEdit }: RunProps) {
           </div>
         ) : (
           <ul className="mt-3 space-y-1.5">
-            {list.items.map((item) => (
-              <li key={item.id}>
-                <label
-                  className={`flex cursor-pointer select-none items-center gap-3 rounded-xl border border-ink-200 bg-white px-3 py-3 transition-colors dark:border-ink-700 dark:bg-ink-800 ${
-                    item.checked
-                      ? 'opacity-60'
-                      : ''
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={item.checked}
-                    onChange={() => toggle(item.id)}
-                    className="h-6 w-6 flex-none rounded-md border-ink-300 text-emerald-600 focus:ring-emerald-500 dark:border-ink-600"
-                  />
-                  <span
-                    className={`flex-1 text-base ${
-                      item.checked
-                        ? 'text-ink-400 line-through dark:text-ink-500'
-                        : 'text-ink-800 dark:text-ink-100'
+            {list.items.map((item, idx) => {
+              if (item.isHeader) {
+                return (
+                  <li
+                    key={item.id}
+                    className={idx === 0 ? 'pt-1' : 'pt-4'}
+                  >
+                    <h2 className="text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-ink-400">
+                      {item.text || 'Section'}
+                    </h2>
+                  </li>
+                );
+              }
+              return (
+                <li key={item.id}>
+                  <label
+                    className={`flex cursor-pointer select-none items-center gap-3 rounded-xl border border-ink-200 bg-white px-3 py-3 transition-colors dark:border-ink-700 dark:bg-ink-800 ${
+                      item.checked ? 'opacity-60' : ''
                     }`}
                   >
-                    {item.text}
-                  </span>
-                </label>
-              </li>
-            ))}
+                    <input
+                      type="checkbox"
+                      checked={item.checked}
+                      onChange={() => toggle(item.id)}
+                      className="h-6 w-6 flex-none rounded-md border-ink-300 text-emerald-600 focus:ring-emerald-500 dark:border-ink-600"
+                    />
+                    <span
+                      className={`flex-1 text-base ${
+                        item.checked
+                          ? 'text-ink-400 line-through dark:text-ink-500'
+                          : 'text-ink-800 dark:text-ink-100'
+                      }`}
+                    >
+                      {item.text}
+                    </span>
+                  </label>
+                </li>
+              );
+            })}
           </ul>
         )}
       </main>
