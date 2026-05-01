@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+# Ticked Off
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Reusable checklists for travel, packing, and routines. Save once, run any time.
 
-Currently, two official plugins are available:
+A mobile-first PWA — installable to your home screen and works offline. All data lives in your browser's `localStorage`; no account, no server.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Create reusable checklists (e.g. *Holiday packing*, *Leaving the house*)
+- Tap to check items; progress persists between visits
+- Reorder, rename, and delete items
+- Duplicate a list to spin up a fresh run while keeping the original
+- Reset all checks to start the list over
+- Export/share without a database:
+  - **Email to myself** — opens your mail app with the list pre-filled
+  - **Copy as text** — plain text with `[ ]` / `[x]` markers
+  - **Download JSON** (single list) or **Download all** (full backup)
+  - **Download CSV**
+  - **Import JSON** to restore or merge a backup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
+- React 19 + TypeScript + Vite
+- Tailwind CSS (mobile-first)
+- PWA: web manifest + custom service worker (cache-first for the app shell)
+- Storage: `localStorage` (versioned schema)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Develop
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Build
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+npm run build
+npm run preview
 ```
+
+The build is fully static — drop `dist/` on any static host (GitHub Pages, SiteGround, Netlify, etc.).
+
+## Accessibility
+
+- Semantic landmarks (`<header>`, `<main>`)
+- ARIA on dialogs/menus, `aria-live` for transient toasts
+- Visible focus rings (`:focus-visible`)
+- All interactive elements reachable by keyboard
+- Respects `prefers-color-scheme`
